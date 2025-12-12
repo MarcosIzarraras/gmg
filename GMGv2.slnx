@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="GMG.Application/GMG.Application.csproj" />
+  <Project Path="GMG.Domain/GMG.Domain.csproj" />
+  <Project Path="GMG.Infrastructure/GMG.Infrastructure.csproj" />
+  <Project Path="GMGv2/GMGv2.csproj" />
+</Solution>

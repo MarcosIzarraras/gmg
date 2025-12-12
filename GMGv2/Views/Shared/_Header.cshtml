@@ -1,0 +1,36 @@
+﻿<header class="header">
+    <div class="header-left">
+        <button class="menu-toggle" onclick="toggleSidebar()">
+            <i data-lucide="menu" style="width:24px;height:24px"></i>
+        </button>
+        <div class="search-box">
+            <i data-lucide="search" style="width:18px;height:18px;color:var(--text-muted)"></i>
+            <input type="text" placeholder="Buscar...">
+        </div>
+    </div>
+    <div class="header-actions">
+        <button class="btn btn-icon btn-ghost sm">
+            <i data-lucide="bell" style="width:20px;height:20px"></i>
+        </button>
+        <div class="dropdown">
+            <button class="btn btn-icon btn-ghost sm">
+                <i data-lucide="more-vertical" style="width:20px;height:20px"></i>
+            </button>
+            <div class="dropdown-menu">
+                <div class="dropdown-item">
+                    <i data-lucide="user" style="width:16px;height:16px"></i>
+                    Perfil
+                </div>
+                <div class="dropdown-item">
+                    <i data-lucide="settings" style="width:16px;height:16px"></i>
+                    Configuración
+                </div>
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-item danger">
+                    <i data-lucide="log-out" style="width:16px;height:16px"></i>
+                    Cerrar sesión
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

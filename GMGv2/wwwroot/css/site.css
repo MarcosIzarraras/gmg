@@ -1,0 +1,373 @@
+﻿@import url('sidebars.css');
+@import url('buttons.css');
+@import url('cards.css');
+@import url('tables.css');
+@import url('inputs.css');
+@import url('dropdowns.css');
+@import url('modales.css');
+
+:root {
+    --bg-primary: #f8fafc;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #f1f5f9;
+    --bg-elevated: #ffffff;
+    --border: #e2e8f0;
+    --border-hover: #cbd5e1;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --text-muted: #94a3b8;
+    --accent: #6366f1;
+    --accent-hover: #4f46e5;
+    --accent-muted: rgba(99, 102, 241, 0.12);
+    --success: #22c55e;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --shadow: 0 4px 24px rgba(0,0,0,0.08);
+    --transition: 150ms ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* === LAYOUT === */
+.app-layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    grid-template-rows: 64px 1fr;
+    grid-template-areas:
+        "sidebar header"
+        "sidebar main";
+    min-height: 100vh;
+}
+
+@media (max-width: 768px) {
+    .app-layout {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "header"
+            "main";
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 280px;
+        z-index: 100;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .mobile-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.6);
+        z-index: 99;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .mobile-overlay.show {
+        display: block;
+        opacity: 1;
+    }
+
+    .sidebar-close {
+        display: flex;
+    }
+}
+
+.sidebar-close {
+    display: none;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    width: 32px;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition);
+}
+
+.sidebar-close:hover {
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+}
+
+/* === GRID === */
+
+.row {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 16px;
+}
+
+/* Columnas base */
+.col-1 {
+    grid-column: span 1;
+}
+
+.col-2 {
+    grid-column: span 2;
+}
+
+.col-3 {
+    grid-column: span 3;
+}
+
+.col-4 {
+    grid-column: span 4;
+}
+
+.col-5 {
+    grid-column: span 5;
+}
+
+.col-6 {
+    grid-column: span 6;
+}
+
+.col-7 {
+    grid-column: span 7;
+}
+
+.col-8 {
+    grid-column: span 8;
+}
+
+.col-9 {
+    grid-column: span 9;
+}
+
+.col-10 {
+    grid-column: span 10;
+}
+
+.col-11 {
+    grid-column: span 11;
+}
+
+.col-12 {
+    grid-column: span 12;
+}
+
+/* Tablet (≤992px): col-1 a col-4 → 6, col-5 a col-8 → 6, col-9+ → 12 */
+@media (max-width: 992px) {
+    .col-1, .col-2, .col-3, .col-4 {
+        grid-column: span 6;
+    }
+
+    .col-5, .col-6, .col-7, .col-8 {
+        grid-column: span 6;
+    }
+
+    .col-9, .col-10, .col-11 {
+        grid-column: span 12;
+    }
+}
+
+/* Mobile (≤576px): todas → 12 */
+@media (max-width: 576px) {
+    .col-1, .col-2, .col-3, .col-4,
+    .col-5, .col-6, .col-7, .col-8,
+    .col-9, .col-10, .col-11, .col-12 {
+        grid-column: span 12;
+    }
+}
+
+/* Gap variants */
+.row.gap-0 {
+    gap: 0;
+}
+
+.row.gap-8 {
+    gap: 8px;
+}
+
+.row.gap-24 {
+    gap: 24px;
+}
+
+.row.gap-32 {
+    gap: 32px;
+}
+
+
+/* === HEADER === */
+.header {
+    grid-area: header;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    gap: 16px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 8px;
+}
+
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: flex;
+    }
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 8px 14px;
+    gap: 10px;
+    min-width: 280px;
+    transition: border-color var(--transition);
+}
+
+    .search-box:focus-within {
+        border-color: var(--accent);
+    }
+
+    .search-box input {
+        background: none;
+        border: none;
+        outline: none;
+        color: var(--text-primary);
+        font-size: 14px;
+        width: 100%;
+    }
+
+        .search-box input::placeholder {
+            color: var(--text-muted);
+        }
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+
+/* === MAIN CONTENT === */
+.main {
+    grid-area: main;
+    padding: 24px;
+    overflow-y: auto;
+    background: var(--bg-primary);
+}
+
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.page-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.page-subtitle {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+/* === COMPONENTES === */
+.section {
+    margin-bottom: 40px;
+}
+
+.section-title {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+}
+
+/* UTILS */
+.flex {
+    display: flex;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.gap-2 {
+    gap: 8px;
+}
+
+.gap-4 {
+    gap: 16px;
+}
+
+.mt-4 {
+    margin-top: 16px;
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+@media (max-width: 640px) {
+    .grid-2 {
+        grid-template-columns: 1fr;
+    }
+
+    .search-box {
+        min-width: 160px;
+    }
+}
+
+.text-end{
+    text-align:end;
+}

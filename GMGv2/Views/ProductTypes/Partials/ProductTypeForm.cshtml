@@ -1,0 +1,12 @@
+﻿@using GMG.Application.Feactures.Products.Commands.CreateProductType
+@model SaveProductTypeCommand
+
+<form id="frm-product-type" method="post" asp-controller="ProductTypes" asp-action="Index">
+    <input asp-for="Id" hidden />
+    <div class="row">
+        <div class="form-group col-12">
+            <label asp-for="Name" class="form-label">Name</label>
+            <input asp-for="Name" class="form-input" placeholder="Category Name" />
+        </div>
+    </div>
+</form>

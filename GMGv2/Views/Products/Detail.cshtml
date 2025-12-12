@@ -1,0 +1,42 @@
+﻿@model GMGv2.Models.ProductDetailViewModel
+<form method="post" asp-controller="products" asp-action="update">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Edit Product</h1>
+        </div>
+        <button class="btn btn-primary">
+            Update product
+        </button>
+    </div>
+    <div class="card">
+        <div class="card-body row">
+            <input asp-for="Id" hidden />
+            <div class="form-group col-6">
+                <label asp-for="Name" class="form-label">Name</label>
+                <input type="text" class="form-input" asp-for="Name" />
+            </div>
+            <div class="form-group col-6">
+                <label asp-for="ProductTypeId" class="form-label">Category</label>
+                <select class="form-input" asp-for="ProductTypeId" asp-items="Model.ProductTypes"></select>
+            </div>
+            <div class="form-group col-12">
+                <label asp-for="Description" class="form-label">Description</label>
+                <input type="text" class="form-input" asp-for="Description" />
+            </div>
+            <div class="form-group col-6">
+                <label asp-for="Price" class="form-label">Price</label>
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i data-lucide="dollar-sign" style="width:16px;height:16px;"></i>
+                    </span>
+                    <input type="number" class="form-input" asp-for="Price" />
+                </div>
+            </div>
+            <div class="form-group col-6">
+                <label asp-for="Stock" class="form-label">Stock</label>
+                <input type="text" class="form-input" asp-for="Stock" />
+            </div>
+        </div>
+    </div>
+</form>
+    

@@ -1,0 +1,57 @@
+﻿@using GMGv2.Extensions
+<aside class="sidebar" id="sidebar">
+    <button class="sidebar-close" onclick="closeSidebar()">
+        <i data-lucide="x" style="width:18px;height:18px"></i>
+    </button>
+    <div class="sidebar-header">
+        <div class="logo">
+            <div class="logo-icon">
+                <i data-lucide="layers" style="width:18px;height:18px;color:white"></i>
+            </div>
+            <span>AppName</span>
+        </div>
+    </div>
+
+    <nav class="nav-section">
+        <div class="nav-label">Principal</div>
+        <a href="#" class="nav-item">
+            <i data-lucide="layout-dashboard" style="width:18px;height:18px"></i>
+            Dashboard
+        </a>
+        <a asp-action="index" asp-controller="producttypes" class="nav-item @Html.IsActive("producttypes", "index")">
+            <i data-lucide="folder" style="width:18px;height:18px"></i>
+            Categories
+        </a>
+        <a asp-action="index" asp-controller="products" class="nav-item @Html.IsActive("products", "index")">
+            <i data-lucide="boxes" style="width:18px;height:18px"></i>
+            Products
+        </a>
+        <a href="#" class="nav-item">
+            <i data-lucide="bar-chart-3" style="width:18px;height:18px"></i>
+            Reportes
+        </a>
+    </nav>
+
+    <nav class="nav-section">
+        <div class="nav-label">Sistema</div>
+        <a href="#" class="nav-item">
+            <i data-lucide="settings" style="width:18px;height:18px"></i>
+            Configuración
+        </a>
+        <a href="#" class="nav-item">
+            <i data-lucide="help-circle" style="width:18px;height:18px"></i>
+            Ayuda
+        </a>
+    </nav>
+
+    <div class="sidebar-footer">
+        <div class="user-card">
+            <div class="avatar">MI</div>
+            <div class="user-info">
+                <div class="user-name">Marcos Izarraras</div>
+                <div class="user-role">Administrador</div>
+            </div>
+            <i data-lucide="chevron-down" style="width:16px;height:16px;color:var(--text-muted)"></i>
+        </div>
+    </div>
+</aside>

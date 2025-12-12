@@ -1,0 +1,21 @@
+﻿@using GMG.Application.Common.Pagination
+@model PaginationResult<GMG.Domain.Products.Entities.ProductType>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr data-id="@item.Id">
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<partial name="_Pagination" model="new PaginationViewModel(Model.Page, Model.TotalPages)" />

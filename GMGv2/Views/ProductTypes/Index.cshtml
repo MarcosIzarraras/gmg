@@ -1,0 +1,37 @@
+﻿@using GMG.Application.Common.Pagination
+@using GMG.Application.Feactures.Products.Commands.CreateProductType
+@using GMG.Domain.Products.Entities
+
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Categories</h1>
+    </div>
+    <button class="btn btn-primary" id="btn-new-category">
+        <i data-lucide="plus" style="width:16px;height:16px"></i>
+        New category
+    </button>
+</div>
+
+<div class="section" id="tbl-container"></div>
+
+<div id="mdl-product-type" class="modal-overlay">
+    <div class="modal">
+        <div class="modal-header">
+            <h3 class="modal-title">Create Category</h3>
+            <button class="modal-close">
+                <i data-lucide="x"></i>
+            </button>
+        </div>
+        <div class="modal-body" id="mdl-product-type-body">
+            <partial name="Partials/ProductTypeForm" model="@(new SaveProductTypeCommand(null, ""))" />
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-ghost" data-modal-close>Cancelar</button>
+            <button class="btn btn-primary" type="submit" form="frm-product-type">Confirmar</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/productTypes/index.js" asp-append-version="true"></script>
+}

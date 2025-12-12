@@ -1,0 +1,39 @@
+﻿@using GMGv2.Common
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - GMGv2</title>
+    <script type="importmap"></script>
+    <script src="~/lib/lucide/lucide.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/notyf/notyf.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/GMGv2.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="app-layout">
+        <div class="mobile-overlay" id="overlay" onclick="closeSidebar()"></div>
+        <partial name="_Sidebar" />
+        <partial name="_Header" />
+        <main class="main">
+            @RenderBody()
+        </main>
+    </div>
+    <script src="~/lib/notyf/notyf.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @if (TempData[Notification.TypeKey] is string type && TempData[Notification.MessageKey] is string message)
+    {
+        <script>
+            const nm = '@message';
+            const nt = '@type';
+            if (nt === 'success') notyf.success(nm);
+            else if (nt === 'error') notyf.error(nm);
+            else if (nt === 'info') notyf.info(nm);
+            else if (nt === 'warning') notyf.warning(nm);
+        </script>
+    }
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

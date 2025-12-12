@@ -1,0 +1,39 @@
+﻿@using GMG.Application.Feactures.Products.Commands.CreateProduct
+@model ProductCreateViewModel
+
+<form method="post" action="Create">
+
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Create Product</h1>
+        </div>
+        <button id="btn-create-product" type="submit" class="btn btn-primary">Create product</button>
+    </div>
+    <div class="card">
+        <div class="card-body row">
+            <div class="form-group col-6">
+                <label class="form-label" asp-for="Name">Name</label>
+                <input class="form-input" asp-for="Name" />
+            </div>
+            <div class="form-group col-6">
+                <label class="form-label" asp-for="ProductTypeId">Category</label>
+                <select class="form-input" asp-for="ProductTypeId" asp-items="Model.ProductTypes"></select>
+            </div>
+            <div class="form-group col-12">
+                <label class="form-label" asp-for="Description">Description</label>
+                <input class="form-input" asp-for="Description" />
+            </div>
+            <div class="form-group col-6">
+                <label class="form-label" asp-for="Price">Price</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i data-lucide="dollar-sign" style="width:16px;height:16px;"></i></span>
+                    <input class="form-input" asp-for="Price" />
+                </div>
+            </div>
+            <div class="form-group col-6">
+                <label class="form-label" asp-for="InitialStock">Initial Stock</label>
+                <input class="form-input" asp-for="InitialStock" />
+            </div>
+        </div>
+    </div>
+</form>

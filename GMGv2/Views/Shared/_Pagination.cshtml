@@ -1,0 +1,61 @@
+﻿@model PaginationViewModel
+
+<nav aria-label="Page navigation" style="justify-items:end;">
+    <ul class="pagination">
+
+        <!-- Botón Prev -->
+        <li class="page-item @(Model.Page == 1 ? "disabled" : "")">
+            <button class="page-link"
+                    data-page="@(Model.Page - 1)">
+                Prev
+            </button>
+        </li>
+
+        <!-- Primera página -->
+        @if (Model.Start > 1)
+        {
+            <li class="page-item">
+                <button class="page-link" data-page="1">1</button>
+            </li>
+
+            @if (Model.Start > 2)
+            {
+                <li class="page-item disabled"><span class="page-link">…</span></li>
+            }
+        }
+
+        <!-- Páginas dentro del rango -->
+        @for (int i = Model.Start; i <= Model.End; i++)
+        {
+            <li class="page-item @(i == Model.Page ? "active" : "")">
+                <button class="page-link" data-page="@i">
+                    @i
+                </button>
+            </li>
+        }
+
+        <!-- Última página -->
+        @if (Model.End < Model.TotalPages)
+        {
+            @if (Model.End < Model.TotalPages - 1)
+            {
+                <li class="page-item disabled"><span class="page-link">…</span></li>
+            }
+
+            <li class="page-item">
+                <button class="page-link" data-page="@Model.TotalPages">
+                    @Model.TotalPages
+                </button>
+            </li>
+        }
+
+        <!-- Botón Next -->
+        <li class="page-item @(Model.Page == Model.TotalPages ? "disabled" : "")">
+            <button class="page-link"
+                    data-page="@(Model.Page + 1)">
+                Next
+            </button>
+        </li>
+
+    </ul>
+</nav>

@@ -1,0 +1,15 @@
+﻿<div class="page-header">
+    <div>
+        <h1 class="page-title">Products</h1>
+    </div>
+    <a asp-action="create" asp-controller="products" class="btn btn-primary">
+        <i data-lucide="plus" style="width:16px;height:16px"></i>
+        New product
+    </a>
+</div>
+
+<section class="section" id="tbl-container"></section>
+
+@section Scripts{
+    <script src="~/js/products/index.js" asp-append-version="true"></script>
+}
