@@ -8,8 +8,6 @@ const table = new Table({
     columns: [
         { title: 'Id', data: 'id' },
         { title: 'Name', data: 'name' },
-        { title: 'Create Date', data: 'createdAt' },
-        { title: 'Update Date', data: 'updatedAt' },
         { title: 'Actions', data: 'id', render: (data) => `<div class="actions-cell"><button data-id="edit" class="btn btn-icon btn-ghost"><i data-lucide="pencil" style="width:16px;height:16px"></i></button></div>` }
     ],
     afterRender: () => {

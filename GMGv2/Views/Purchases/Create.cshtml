@@ -3,35 +3,47 @@
 <form method="post" action="Create" id="purchase-form">
     <div class="page-header">
         <div>
-            <div class="page-title">Create purchase</div>
+            <h1 class="page-title">Create Purchase</h1>
         </div>
         <button type="submit" class="btn btn-primary">Create purchase</button>
     </div>
-    <section class="section">
-        <div class="card">
-            <div class="card-body">
+
+
+    <div class="card">
+        <div class="card-body row">
+            <div class="form-group col-6">
+                <label class="form-label" asp-for="SupplierId">Supplier</label>
+                <select class="form-input" asp-for="SupplierId" asp-items="Model.Suppliers"></select>
+            </div>
+            <div class="form-group col-3">
+                <label class="form-label" asp-for="PurchaseAt">Purchase Date</label>
+                <input class="form-input" asp-for="PurchaseAt" type="date" />
+            </div>
+            <div class="form-group col-3">
+                <label class="form-label" asp-for="DeliveryAt">Delivery Date</label>
+                <input class="form-input" asp-for="DeliveryAt" type="date" />
             </div>
         </div>
-    </section>
+    </div>
+
     <div class="card">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-6 mb-2">
-                    <label class="form-label">Product Name</label>
-                    <input type="text" id="product-search" class="form-control" placeholder="Search product by name..." autocomplete="off" />
-                    <div id="product-suggestions" class="list-group position-absolute" style="z-index: 1000; max-height: 200px; overflow-y: auto; display: none;"></div>
-                </div>
-                <div class="col-md-2 mb-2">
-                    <label class="form-label">Quantity</label>
-                    <input type="number" id="product-quantity" class="form-control" step="0.01" min="0.01" />
-                </div>
-                <div class="col-md-2 mb-2">
-                    <label class="form-label">Unit Price</label>
-                    <input type="number" id="product-price" class="form-control" step="0.01" min="0.01" />
-                </div>
-                <div class="col-md-2 mb-2 d-flex align-items-end">
-                    <button type="button" id="add-product-btn" class="btn btn-primary w-100">Add</button>
-                </div>
+        <div class="card-body row">
+            <div class="form-group col-6" id="product-search">
+                @* <label class="form-label">Product Name</label> *@
+@*                 <div id="product-search"></div> *@
+                @* <input type="text" id="product-search" class="form-input" placeholder="Search product by name..." autocomplete="off" />
+                <div id="product-suggestions" class="list-group position-absolute" style="z-index: 1000; max-height: 200px; overflow-y: auto; display: none;"></div> *@
+            </div>
+            <div class="form-group col-2">
+                <label class="form-label">Quantity</label>
+                <input type="number" id="product-quantity" class="form-input" step="0.01" min="0.01" />
+            </div>
+            <div class="form-group col-2">
+                <label class="form-label">Unit Price</label>
+                <input type="number" id="product-price" class="form-input" step="0.01" min="0.01" />
+            </div>
+            <div class="form-group col-2 align-bottom">
+                <button type="button" id="add-product-btn" class="btn btn-primary w-100">Add</button>
             </div>
         </div>
     </div>

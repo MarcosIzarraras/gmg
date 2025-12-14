@@ -3,8 +3,6 @@ let selectedProductId = null;
 let selectedProductName = null;
 let searchTimeout = null;
 
-const productSearch = document.getElementById('product-search');
-const productSuggestions = document.getElementById('product-suggestions');
 const productQuantity = document.getElementById('product-quantity');
 const productPrice = document.getElementById('product-price');
 const addProductBtn = document.getElementById('add-product-btn');
@@ -12,75 +10,26 @@ const purchaseForm = document.getElementById('purchase-form');
 const detailsTableBody = document.getElementById('details-table-body');
 const emptyRow = document.getElementById('empty-row');
 const totalAmount = document.getElementById('total-amount');
+const productSearch = new SelectSearch({
+    selector: '#product-search',
+    placeholder: "Search product...",
+    label: 'Product',
+    url: 'products/search',
+    propText: 'name',
+    propValue: 'id',
+    valueCallback: setProduct
+});
 
-productSearch.addEventListener('input', SearchProducts);
-productSearch.addEventListener('keydown', HandleEnterKey);
 productQuantity.addEventListener('keydown', HandleEnterKey);
 productPrice.addEventListener('keydown', HandleEnterKey);
 addProductBtn.addEventListener('click', AddProduct);
 purchaseForm.addEventListener('submit', SubmitPurchase);
-document.addEventListener('click', HideSuggestions);
 
 function HandleEnterKey(e) {
     if (e.key === 'Enter') {
         e.preventDefault();
         AddProduct();
     }
-}
-
-function SearchProducts(e) {
-    const query = e.target.value.trim();
-
-    if (query.length < 2) {
-        productSuggestions.style.display = 'none';
-        return;
-    }
-
-    clearTimeout(searchTimeout);
-    searchTimeout = setTimeout(async () => {
-        try {
-            const response = await fetch(`/Products/Search?query=${encodeURIComponent(query)}`);
-            if (!response.ok) {
-                console.error('Error searching products');
-                return;
-            }
-
-            const products = await response.json();
-            ShowSuggestions(products);
-        } catch (error) {
-            console.error('Error searching products:', error);
-        }
-    }, 300);
-}
-
-function ShowSuggestions(products) {
-    productSuggestions.innerHTML = '';
-
-    if (products.length === 0) {
-        productSuggestions.style.display = 'none';
-        return;
-    }
-
-    products.forEach(product => {
-        const item = document.createElement('button');
-        item.type = 'button';
-        item.className = 'list-group-item list-group-item-action';
-        item.textContent = `${product.name} - $${product.price.toFixed(2)}`;
-        item.addEventListener('click', () => SelectProduct(product));
-        productSuggestions.appendChild(item);
-    });
-
-    productSuggestions.style.display = 'block';
-}
-
-function SelectProduct(product) {
-    selectedProductId = product.id;
-    selectedProductName = product.name;
-    productSearch.value = product.name;
-    productPrice.value = product.price.toFixed(2);
-    productSuggestions.style.display = 'none';
-
-    productQuantity.focus();
 }
 
 function AddProduct() {
@@ -199,10 +148,11 @@ async function SubmitPurchase(e) {
     }
 }
 
-function HideSuggestions(e) {
-    if (!e.target.closest('#product-search') && !e.target.closest('#product-suggestions')) {
-        productSuggestions.style.display = 'none';
-    }
+function setProduct(data) {
+    selectedProductId = data.id;
+    selectedProductName = data.name;
+    productPrice.value = data.price;
+    productQuantity.focus();
 }
 
 window.RemoveDetail = RemoveDetail;

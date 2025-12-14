@@ -1,4 +1,5 @@
-﻿using GMG.Application.Common.Pagination;
+﻿
+using GMG.Application.Common.Pagination;
 using GMG.Application.Feactures.Purchases.Commands.CreatePurchase;
 using GMG.Application.Feactures.Purchases.Queries.GetPurchasesPaginated;
 using GMGv2.Common;
@@ -25,7 +26,7 @@ namespace GMGv2.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(PurchaseCreateViewModel viewModel)
         {
-            var result = await mediator.Send(new CreatePurchaseCommand(viewModel.Details));
+            var result = await mediator.Send(new CreatePurchaseCommand(viewModel.Details, viewModel.SupplierId,viewModel.PurchaseAt, viewModel.DeliveryAt));
 
             if (result.IsSuccess)
             {

@@ -10,6 +10,16 @@
     border-radius: var(--radius-lg);
     overflow: hidden;
     transition: all var(--transition);
+    margin-bottom:10px;
+}
+
+/* Allow dropdowns to overflow card boundaries */
+.card:has(.dropdown) {
+    overflow: visible;
+}
+
+.card-body:has(.dropdown) {
+    overflow: visible;
 }
 
     .card:hover {

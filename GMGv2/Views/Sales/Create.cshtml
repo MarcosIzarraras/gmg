@@ -1,0 +1,194 @@
+@{
+    Layout = null;
+}
+@model SaleCreateViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="@Url.Content("~/")" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Point of Sale - GMG</title>
+    <script src="~/lib/lucide/lucide.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/notyf/notyf.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/cards.css" />
+    <link rel="stylesheet" href="~/css/inputs.css" />
+    <link rel="stylesheet" href="~/css/pos.css" />
+</head>
+<body class="pos-body">
+    <div class="pos-container">
+        <!-- Left Panel: Products -->
+        <div class="pos-left">
+            <!-- Search Bar -->
+            <div class="pos-search">
+                <div class="search-container">
+                    <i data-lucide="search" class="search-icon"></i>
+                    <input type="text"
+                           id="product-search"
+                           class="search-input"
+                           placeholder="Search products...">
+                </div>
+            </div>
+
+            <!-- Categories -->
+            <div class="pos-categories">
+                <button class="category-btn active" data-category="all">
+                    <i data-lucide="grid-2x2"></i>
+                    <span>All</span>
+                </button>
+                @foreach (var productType in Model.ProductTypes)
+                {
+                    <button class="category-btn" data-category="@productType.Id">
+                        <i data-lucide="package"></i>
+                        <span>@productType.Name</span>
+                    </button>
+                }
+            </div>
+
+            <!-- Products Grid -->
+            <div class="pos-products" id="products-container">
+                @foreach (var product in Model.Products)
+                {
+                    <div class="product-card"
+                         data-id="@product.Id"
+                         data-category="@product.ProductTypeId"
+                         data-name="@product.Name"
+                         data-price="@product.Price">
+                        <div class="product-image">
+                            <i data-lucide="package-2"></i>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">@product.Name</h3>
+                            <p class="product-description">@product.Description</p>
+                            <div class="product-footer">
+                                <span class="product-price">$@product.Price.ToString("N2")</span>
+                                <span class="product-category">@product.ProductTypeName</span>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Right Panel: Ticket -->
+        <div class="pos-right">
+            <div class="ticket-container">
+                <!-- Ticket Header -->
+                <div class="ticket-header">
+                    <h2 class="ticket-title">
+                        <i data-lucide="receipt"></i>
+                        Sale Ticket
+                    </h2>
+                    <button class="btn-icon" id="clear-ticket" title="Clear ticket">
+                        <i data-lucide="trash-2"></i>
+                    </button>
+                </div>
+
+                <!-- Ticket Items -->
+                <div class="ticket-items" id="ticket-items">
+                    <div class="empty-ticket">
+                        <i data-lucide="shopping-cart"></i>
+                        <p>No products in the ticket</p>
+                    </div>
+                </div>
+
+                <!-- Ticket Footer -->
+                <div class="ticket-footer">
+                    <div class="ticket-totals">
+                        <div class="total-row">
+                            <span>Subtotal:</span>
+                            <span id="subtotal">$0.00</span>
+                        </div>
+                        <div class="total-row">
+                            <span>Tax (0%):</span>
+                            <span id="tax">$0.00</span>
+                        </div>
+                        <div class="total-row total-final">
+                            <span>Total:</span>
+                            <span id="total">$0.00</span>
+                        </div>
+                    </div>
+                    <button class="btn-checkout" id="btn-checkout" disabled>
+                        <i data-lucide="credit-card"></i>
+                        Checkout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div class="modal-overlay" id="checkout-modal">
+        <div class="modal" id="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Process Payment</h3>
+                <button class="btn-icon" id="close-modal">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="checkout-summary">
+                    <div class="summary-row">
+                        <span>Total to pay:</span>
+                        <span class="summary-total" id="modal-total">$0.00</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Payment Method</label>
+                    <select class="form-input" id="payment-method">
+                        <option value="cash">Cash</option>
+                        <option value="card">Card</option>
+                        <option value="transfer">Transfer</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="cash-payment-group">
+                    <label class="form-label">Amount Received</label>
+                    <div class="input-group">
+                        <span class="input-group-text">$</span>
+                        <input type="number"
+                               class="form-input"
+                               id="amount-received"
+                               placeholder="0.00"
+                               step="0.01">
+                    </div>
+                </div>
+
+                <div class="change-display" id="change-display" style="display: none;">
+                    <div class="change-label">Change:</div>
+                    <div class="change-amount" id="change-amount">$0.00</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Customer (Optional)</label>
+                    <input type="text"
+                           class="form-input"
+                           id="customer-name"
+                           placeholder="Customer name">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancel-checkout">
+                    Cancel
+                </button>
+                <button class="btn btn-primary" id="confirm-checkout">
+                    <i data-lucide="check"></i>
+                    Confirm Sale
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/notyf/notyf.min.js"></script>
+    <script src="~/js/site.js"></script>
+    <script src="~/js/sales/create.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

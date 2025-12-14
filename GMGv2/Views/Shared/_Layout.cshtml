@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <base href="@Url.Content("~/")" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - GMGv2</title>
@@ -23,6 +24,7 @@
     </div>
     <script src="~/lib/notyf/notyf.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/components/selectsearch.js" asp-append-version="true"></script>
     @if (TempData[Notification.TypeKey] is string type && TempData[Notification.MessageKey] is string message)
     {
         <script>

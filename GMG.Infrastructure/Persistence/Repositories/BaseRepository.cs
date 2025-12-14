@@ -22,8 +22,14 @@ namespace GMG.Infrastructure.Persistence.Repositories
         public async Task<T?> GetByIdAsync(Guid id)
             => await _dbSet.FirstOrDefaultAsync(x => x.Id == id);
 
-        public async Task<List<T>> ListAsync()
-            => await _dbSet.ToListAsync();
+        public async Task<List<T>> ListAsync(params Expression<Func<T, object>>[] includes)
+        {
+            var query = _dbSet.AsQueryable();
+            foreach (var include in includes)
+                query = query.Include(include);
+
+            return await query.ToListAsync();
+        }
 
         public async Task<T> AddAsync(T entity)
         {

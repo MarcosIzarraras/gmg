@@ -1,6 +1,9 @@
 ﻿using GMG.Domain.Common;
+using GMG.Domain.Customers.Entities;
 using GMG.Domain.Products.Entities;
 using GMG.Domain.Purchases.Entities;
+using GMG.Domain.Sales.Entities;
+using GMG.Domain.Suppliers.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,7 +16,9 @@ namespace GMG.Infrastructure.Persistence
         public DbSet<Product> Products => Set<Product>();
         public DbSet<ProductType> ProductTypes => Set<ProductType>();
         public DbSet<Purchase> Purchases => Set<Purchase>();
-        public DbSet<PurchaseDetail> PurchaseDetails => Set<PurchaseDetail>();
+        public DbSet<Customer> Customers => Set<Customer>();
+        public DbSet<Sale> Sales => Set<Sale>();
+        public DbSet<Supplier> Suppliers => Set<Supplier>();
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {

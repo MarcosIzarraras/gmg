@@ -4,5 +4,5 @@ using MediatR;
 
 namespace GMG.Application.Feactures.Purchases.Commands.CreatePurchase
 {
-    public record CreatePurchaseCommand(List<CreatePurchaseDetailDto> details) : IRequest<Result<Purchase>>;
+    public record CreatePurchaseCommand(List<CreatePurchaseDetailDto> details, Guid Supplier, DateTime PurchaseAt, DateTime? DeliveryAt) : IRequest<Result<Purchase>>;
 }

@@ -9,7 +9,7 @@ namespace GMG.Application.Feactures.Purchases.Commands.CreatePurchase
     {
         public async Task<Result<Purchase>> Handle(CreatePurchaseCommand request, CancellationToken cancellationToken)
         {
-            var purchaseResult = Purchase.Create(request.details.Sum(d => d.UnitPrice * d.Quantity));
+            var purchaseResult = Purchase.Create(request.details.Sum(d => d.UnitPrice * d.Quantity), request.Supplier, request.PurchaseAt, request.DeliveryAt);
 
             if (purchaseResult.IsFailure)
                 return purchaseResult;

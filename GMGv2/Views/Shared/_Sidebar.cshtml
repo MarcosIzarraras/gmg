@@ -8,16 +8,23 @@
             <div class="logo-icon">
                 <i data-lucide="layers" style="width:18px;height:18px;color:white"></i>
             </div>
-            <span>AppName</span>
+            <span>Gardeny</span>
         </div>
     </div>
 
     <nav class="nav-section">
-        <div class="nav-label">Principal</div>
+        <div class="nav-label">Main</div>
         <a href="#" class="nav-item">
             <i data-lucide="layout-dashboard" style="width:18px;height:18px"></i>
             Dashboard
         </a>
+        <a asp-action="create" asp-controller="sales" class="nav-item">
+            <i data-lucide="receipt" style="width:18px;height:18px"></i>
+            POS
+        </a>
+    </nav>
+    <nav class="nav-section">
+        <div class="nav-label">Products</div>
         <a asp-action="index" asp-controller="producttypes" class="nav-item @Html.IsActive("producttypes", "index")">
             <i data-lucide="folder" style="width:18px;height:18px"></i>
             Categories
@@ -26,12 +33,15 @@
             <i data-lucide="boxes" style="width:18px;height:18px"></i>
             Products
         </a>
-        <a href="#" class="nav-item">
-            <i data-lucide="bar-chart-3" style="width:18px;height:18px"></i>
-            Reportes
+    </nav>
+    <nav class="nav-section">
+        <div class="nav-label">Sales</div>
+        <a asp-action="index" asp-controller="sales" class="nav-item">
+            <i data-lucide="file-axis-3d" style="width:18px;height:18px"></i>
+            Sales
         </a>
     </nav>
-
+@* 
     <nav class="nav-section">
         <div class="nav-label">Sistema</div>
         <a href="#" class="nav-item">
@@ -42,7 +52,7 @@
             <i data-lucide="help-circle" style="width:18px;height:18px"></i>
             Ayuda
         </a>
-    </nav>
+    </nav> *@
 
     <div class="sidebar-footer">
         <div class="user-card">

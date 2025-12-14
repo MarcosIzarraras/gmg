@@ -105,16 +105,13 @@ namespace GMGv2.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Search(string query)
+        public async Task<IActionResult> Search(string search)
         {
-            if (string.IsNullOrWhiteSpace(query))
-                return Json(new List<object>());
-
             var pagination = new Pagination
             {
                 Page = 1,
                 PageSize = 10,
-                Search = query
+                Search = search
             };
 
             var result = await mediator.Send(new GetProductsPaginatedQuery(pagination));

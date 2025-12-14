@@ -7,7 +7,7 @@ namespace GMG.Application.Feactures.Interfaces
     public interface IRepository<T> where T : BaseEntity
     {
         Task<T?> GetByIdAsync(Guid id);
-        Task<List<T>> ListAsync();
+        Task<List<T>> ListAsync(params Expression<Func<T, object>>[] includes);
         Task<T> AddAsync(T entity);
         Task<List<T>> AddRangeAsync(List<T> entities);
         Task UpdateAsync(T entity);
