@@ -8,7 +8,7 @@ using System.Text;
 
 namespace GMG.Domain.Products.Entities
 {
-    public class ProductType : BaseEntity
+    public class ProductType : OwnMultipleBranches
     {
         public string Name { get; set; } = string.Empty;
 

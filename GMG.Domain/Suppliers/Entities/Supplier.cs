@@ -3,7 +3,7 @@ using GMG.Domain.Common.Result;
 
 namespace GMG.Domain.Suppliers.Entities;
 
-public class Supplier : BaseEntity
+public class Supplier : OwnMultipleBranches
 {
     public string Name { get; private set; } = string.Empty;
     public string Email { get; private set; } = string.Empty;

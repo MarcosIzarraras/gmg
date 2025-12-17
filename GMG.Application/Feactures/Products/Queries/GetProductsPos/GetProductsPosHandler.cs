@@ -1,4 +1,4 @@
-﻿using GMG.Application.Feactures.Interfaces;
+﻿using GMG.Application.Common.Persistence.Repositories;
 using MediatR;
 
 namespace GMG.Application.Feactures.Products.Queries.GetProducts

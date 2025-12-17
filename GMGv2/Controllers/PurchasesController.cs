@@ -1,5 +1,5 @@
 ﻿
-using GMG.Application.Common.Pagination;
+using GMG.Application.Common.Paginations;
 using GMG.Application.Feactures.Purchases.Commands.CreatePurchase;
 using GMG.Application.Feactures.Purchases.Queries.GetPurchasesPaginated;
 using GMGv2.Common;

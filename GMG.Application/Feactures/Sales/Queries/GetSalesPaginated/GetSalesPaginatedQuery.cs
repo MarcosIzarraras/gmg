@@ -1,4 +1,4 @@
-﻿using GMG.Application.Common.Pagination;
+﻿using GMG.Application.Common.Paginations;
 using MediatR;
 
 namespace GMG.Application.Feactures.Sales.Queries.GetSalesPaginated

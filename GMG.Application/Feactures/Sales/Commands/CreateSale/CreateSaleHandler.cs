@@ -1,4 +1,4 @@
-using GMG.Application.Feactures.Interfaces;
+using GMG.Application.Common.Persistence.Repositories;
 using GMG.Domain.Common.Result;
 using GMG.Domain.Sales.Entities;
 using MediatR;

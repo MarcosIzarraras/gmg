@@ -1,11 +1,14 @@
 using System.Diagnostics;
+using GMG.Application.Common;
 using GMGv2.Common;
 using GMGv2.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GMGv2.Controllers
 {
-    public class HomeController : Controller
+    [Authorize]
+    public class HomeController(IUserContext userContext) : Controller
     {
         public IActionResult Index()
         {

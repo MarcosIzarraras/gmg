@@ -1,4 +1,4 @@
-﻿using GMG.Application.Common.Pagination;
+﻿using GMG.Application.Common.Paginations;
 using GMG.Domain.Purchases.Entities;
 using MediatR;
 

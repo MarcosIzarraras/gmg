@@ -1,4 +1,4 @@
-﻿using GMG.Application.Common.Pagination;
+﻿using GMG.Application.Common.Paginations;
 using GMG.Application.Feactures.Products.Commands.CreateProduct;
 using GMG.Application.Feactures.Products.Commands.UpdateProduct;
 using GMG.Application.Feactures.Products.Queries.GetProductById;

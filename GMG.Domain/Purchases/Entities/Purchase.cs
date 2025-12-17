@@ -4,7 +4,7 @@ using GMG.Domain.Suppliers.Entities;
 
 namespace GMG.Domain.Purchases.Entities
 {
-    public class Purchase : BaseEntity
+    public class Purchase : OwnBranch
     {
         public double Total { get; set; }
         public DateTime PurchaseDate { get; set; }

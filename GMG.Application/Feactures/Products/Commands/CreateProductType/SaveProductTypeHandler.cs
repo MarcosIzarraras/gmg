@@ -1,4 +1,5 @@
-﻿using GMG.Application.Feactures.Interfaces;
+﻿using GMG.Application.Common.Persistence;
+using GMG.Application.Common.Persistence.Repositories;
 using GMG.Domain.Common.Result;
 using GMG.Domain.Products.Entities;
 using MediatR;
@@ -11,10 +12,12 @@ namespace GMG.Application.Feactures.Products.Commands.CreateProductType
     public class SaveProductTypeHandler : IRequestHandler<SaveProductTypeCommand, Result<ProductType>>
     {
         private readonly IProductTypeRepository productTypeRepository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public SaveProductTypeHandler(IProductTypeRepository productTypeRepository)
+        public SaveProductTypeHandler(IProductTypeRepository productTypeRepository, IUnitOfWork unitOfWork)
         {
             this.productTypeRepository = productTypeRepository;
+            this.unitOfWork = unitOfWork;
         }
 
         public async Task<Result<ProductType>> Handle(SaveProductTypeCommand request, CancellationToken cancellationToken)
@@ -46,9 +49,9 @@ namespace GMG.Application.Feactures.Products.Commands.CreateProductType
                 if (result.IsFailure)
                     return result;
 
-                await productTypeRepository.UpdateAsync(productType);
             }
 
+            await unitOfWork.SaveChangesAsync(cancellationToken);
             return Result<ProductType>.Success(result.Value);
         }
     }

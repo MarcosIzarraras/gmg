@@ -4,8 +4,9 @@ using GMG.Domain.Products.Entities;
 
 namespace GMG.Domain.Sales.Entities;
 
-public class SaleDetail : BaseEntity
+public class SaleDetail
 {
+    public Guid Id { get; set; }
     public Guid SaleId { get; set; }
     public Guid ProductId { get; set; }
     public double Quantity { get; set; }

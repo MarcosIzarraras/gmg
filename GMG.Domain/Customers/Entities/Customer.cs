@@ -3,7 +3,7 @@ using GMG.Domain.Common.Result;
 
 namespace GMG.Domain.Customers.Entities;
 
-public class Customer : BaseEntity
+public class Customer : OwnMultipleBranches
 {
     public string Name { get; private set; } = string.Empty;
     public string Email { get; private set; } = string.Empty;

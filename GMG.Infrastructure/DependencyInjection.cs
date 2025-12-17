@@ -1,4 +1,5 @@
-﻿using GMG.Application.Feactures.Interfaces;
+﻿using GMG.Application.Common.Persistence;
+using GMG.Application.Common.Persistence.Repositories;
 using GMG.Infrastructure.Persistence;
 using GMG.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +17,7 @@ namespace GMG.Infrastructure
             string connectionString)
         {
             services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(connectionString));
+                options.UseNpgsql(connectionString));
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -24,6 +25,9 @@ namespace GMG.Infrastructure
 
             services.AddScoped<IProductTypeRepository, ProductTypeRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IBranchUserRepository, BranchUserRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IBranchRepository, BranchRepository>();
 
             return services;
         }

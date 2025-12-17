@@ -4,7 +4,7 @@ using GMG.Domain.Customers.Entities;
 
 namespace GMG.Domain.Sales.Entities;
 
-public class Sale : BaseEntity
+public class Sale : OwnBranch
 {
     public double Total { get; set; }
     public bool IsCancelled { get; private set; }

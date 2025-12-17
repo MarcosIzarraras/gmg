@@ -1,4 +1,5 @@
-﻿using GMG.Application.Feactures.Interfaces;
+﻿using GMG.Application.Common.Persistence;
+using GMG.Application.Common.Persistence.Repositories;
 using GMG.Domain.Common.Result;
 using GMG.Domain.Products.Entities;
 using MediatR;
@@ -8,7 +9,7 @@ using System.Text;
 
 namespace GMG.Application.Feactures.Products.Commands.UpdateProduct
 {
-    public class UpdateProductHandler(IProductRepository productRepository) : IRequestHandler<UpdateProductCommand, Result<Product>>
+    public class UpdateProductHandler(IProductRepository productRepository, IUnitOfWork unitOfWork) : IRequestHandler<UpdateProductCommand, Result<Product>>
     {
         public async Task<Result<Product>> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
@@ -23,7 +24,7 @@ namespace GMG.Application.Feactures.Products.Commands.UpdateProduct
             if (productResult.IsFailure)
                 return productResult;
 
-            await productRepository.UpdateAsync(product);
+            await unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Result<Product>.Success(product);
         }

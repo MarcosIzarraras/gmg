@@ -1,4 +1,16 @@
-﻿@using GMGv2.Extensions
+﻿@using GMG.Application.Common
+@using GMGv2.Extensions
+@inject IUserContext UserContext
+
+@{
+    var userName = UserContext.UserName;
+    var initials = string.Join("", userName.Split(' ')
+        .Select(n => n.FirstOrDefault())
+        .Where(c => c != default(char)))
+        .ToUpper();
+}
+
+
 <aside class="sidebar" id="sidebar">
     <button class="sidebar-close" onclick="closeSidebar()">
         <i data-lucide="x" style="width:18px;height:18px"></i>
@@ -41,25 +53,13 @@
             Sales
         </a>
     </nav>
-@* 
-    <nav class="nav-section">
-        <div class="nav-label">Sistema</div>
-        <a href="#" class="nav-item">
-            <i data-lucide="settings" style="width:18px;height:18px"></i>
-            Configuración
-        </a>
-        <a href="#" class="nav-item">
-            <i data-lucide="help-circle" style="width:18px;height:18px"></i>
-            Ayuda
-        </a>
-    </nav> *@
 
     <div class="sidebar-footer">
         <div class="user-card">
-            <div class="avatar">MI</div>
+            <div class="avatar">@initials</div>
             <div class="user-info">
-                <div class="user-name">Marcos Izarraras</div>
-                <div class="user-role">Administrador</div>
+                <div class="user-name">@UserContext.UserName</div>
+                <div class="user-role">@UserContext.UserType</div>
             </div>
             <i data-lucide="chevron-down" style="width:16px;height:16px;color:var(--text-muted)"></i>
         </div>

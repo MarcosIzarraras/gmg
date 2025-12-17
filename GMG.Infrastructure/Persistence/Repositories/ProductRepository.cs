@@ -1,4 +1,4 @@
-﻿using GMG.Application.Feactures.Interfaces;
+﻿using GMG.Application.Common.Persistence.Repositories;
 using GMG.Domain.Products.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;

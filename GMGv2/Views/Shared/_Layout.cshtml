@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - GMGv2</title>
     <script type="importmap"></script>
-    <script src="~/lib/lucide/lucide.js"></script>
+    <script src="~/lib/lucide/lucide.js" asp-append-version="true"></script>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="~/lib/notyf/notyf.min.css" />
+    <link rel="stylesheet" href="~/lib/notyf/notyf.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/GMGv2.styles.css" asp-append-version="true" />
 </head>
@@ -22,7 +22,7 @@
             @RenderBody()
         </main>
     </div>
-    <script src="~/lib/notyf/notyf.min.js"></script>
+    <script src="~/lib/notyf/notyf.min.js" asp-append-version="true"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/components/selectsearch.js" asp-append-version="true"></script>
     @if (TempData[Notification.TypeKey] is string type && TempData[Notification.MessageKey] is string message)

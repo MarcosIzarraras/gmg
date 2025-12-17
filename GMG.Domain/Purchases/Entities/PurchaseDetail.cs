@@ -7,8 +7,9 @@ using System.Text;
 
 namespace GMG.Domain.Purchases.Entities
 {
-    public class PurchaseDetail : BaseEntity
+    public class PurchaseDetail
     {
+        public Guid Id { get; set; }
         public Guid PurchaseId { get; set; }
         public Guid ProductId { get; set; }
         public double Quantity { get; set; }

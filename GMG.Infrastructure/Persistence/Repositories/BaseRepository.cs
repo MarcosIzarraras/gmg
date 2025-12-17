@@ -1,15 +1,11 @@
-﻿using GMG.Application.Common.Pagination;
-using GMG.Application.Feactures.Interfaces;
-using GMG.Domain.Common;
+﻿using GMG.Application.Common.Paginations;
+using GMG.Application.Common.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace GMG.Infrastructure.Persistence.Repositories
 {
-    public class BaseRepository<T> : IRepository<T> where T : BaseEntity
+    public class BaseRepository<T> : IRepository<T> where T : class
     {
         private DbSet<T> _dbSet;
         private readonly AppDbContext _db;
@@ -20,7 +16,7 @@ namespace GMG.Infrastructure.Persistence.Repositories
         }
 
         public async Task<T?> GetByIdAsync(Guid id)
-            => await _dbSet.FirstOrDefaultAsync(x => x.Id == id);
+            => await _dbSet.FindAsync(id);
 
         public async Task<List<T>> ListAsync(params Expression<Func<T, object>>[] includes)
         {
@@ -34,20 +30,12 @@ namespace GMG.Infrastructure.Persistence.Repositories
         public async Task<T> AddAsync(T entity)
         {
             await _dbSet.AddAsync(entity);
-            await _db.SaveChangesAsync();
             return entity;
-        }
-
-        public async Task UpdateAsync(T entity)
-        {
-            _dbSet.Update(entity);
-            await _db.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(T entity)
         {
             _dbSet.Remove(entity);
-            await _db.SaveChangesAsync();
         }
 
         public async Task<PaginationResult<T>> ListPaginatedAsync(
@@ -90,7 +78,6 @@ namespace GMG.Infrastructure.Persistence.Repositories
         public async Task<List<T>> AddRangeAsync(List<T> entities)
         {
             await _dbSet.AddRangeAsync(entities);
-            await _db.SaveChangesAsync();
             return entities;
         }
     }
