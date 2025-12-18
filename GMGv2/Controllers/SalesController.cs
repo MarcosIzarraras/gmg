@@ -5,11 +5,12 @@ using GMG.Application.Feactures.Sales.Commands.CreateSale;
 using GMG.Application.Feactures.Sales.Queries.GetSalesPaginated;
 using GMGv2.Models;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace GMGv2.Controllers
 {
+    [Authorize]
     public class SalesController(IMediator mediator) : Controller
     {
         public IActionResult Index()

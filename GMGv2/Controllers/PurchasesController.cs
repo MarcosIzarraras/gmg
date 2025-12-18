@@ -5,10 +5,12 @@ using GMG.Application.Feactures.Purchases.Queries.GetPurchasesPaginated;
 using GMGv2.Common;
 using GMGv2.Models;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GMGv2.Controllers
 {
+    [Authorize]
     public class PurchasesController(IMediator mediator) : Controller
     {
         public IActionResult Index()

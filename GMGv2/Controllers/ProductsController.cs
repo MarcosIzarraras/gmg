@@ -10,6 +10,7 @@ using GMGv2.Common;
 using GMGv2.Extensions;
 using GMGv2.Models;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -17,6 +18,7 @@ using System.Threading.Tasks;
 
 namespace GMGv2.Controllers
 {
+    [Authorize]
     public class ProductsController(IMediator mediator) : Controller
     {
         public async Task<ActionResult> Index(Pagination pagination)

@@ -3,12 +3,14 @@ using GMG.Application.Feactures.Products.Commands.CreateProductType;
 using GMG.Application.Feactures.Products.Queries.GetProductTypeById;
 using GMG.Application.Feactures.Products.Queries.GetProductTypesPaginated;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using System.Threading.Tasks;
 
 namespace GMGv2.Controllers
 {
+    [Authorize]
     public class ProductTypesController(IMediator mediator) : Controller
     {
         public async Task<IActionResult> Index()

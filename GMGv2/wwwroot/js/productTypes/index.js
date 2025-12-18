@@ -31,14 +31,8 @@ function NewProductType() {
 async function SubmitProductType(e) {
     e.preventDefault();
 
-    const form = e.target;
-    const formData = new FormData(form);
-
     try {
-        const response = await fetch(form.action, {
-            method: "POST",
-            body: formData
-        });
+        const response = await requestManager.submitForm(e.target, 'submit-product-type', '#btn-confirm');
 
         if (!response.ok) {
             notyf.error("Error in save product type");
