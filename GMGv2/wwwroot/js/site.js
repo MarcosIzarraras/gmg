@@ -105,7 +105,9 @@ class Table {
         this.container.innerHTML = `<div class="table-container">
             <table class="table">
                 ${ this.columnsTemplate() }
-                <tbody></tbody>
+                <tbody>
+                    <tr><td colspan="${ this.columns.length }" style="text-align:center;">Loading...</td></tr>
+                </tbody>
             </table>
             <div data-id="footer" class="table-footer">
                 <div class="table-info" data-id="info">Show 1-5 of 23</div>
@@ -160,6 +162,10 @@ class Table {
                 rows += `<td>${this.actionButtons(index)}</td>`;
             rows += `</tr>`;
         });
+
+        if (items.length === 0) {
+            rows += `<tr><td colspan="${this.columns.length }" style="text-align: center;">Data not found.</td></tr>`;
+        }
 
         tableBody.innerHTML = rows;
 

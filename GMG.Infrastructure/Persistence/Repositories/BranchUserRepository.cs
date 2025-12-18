@@ -10,6 +10,9 @@ namespace GMG.Infrastructure.Persistence.Repositories
     public class BranchUserRepository(AppDbContext db) : IBranchUserRepository
     {
         public Task<BranchUser?> GetByEmailAsync(string email)
-            => db.BranchUsers.FirstOrDefaultAsync(bu => bu.Email == email && bu.IsActive);
+            => db.Branches
+            .Include(i => i.BranchUsers)
+            .SelectMany(s => s.BranchUsers)
+            .FirstOrDefaultAsync(bu => bu.Email == email && bu.IsActive);
     }
 }

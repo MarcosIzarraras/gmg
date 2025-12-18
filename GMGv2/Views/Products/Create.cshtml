@@ -1,7 +1,7 @@
 ﻿@using GMG.Application.Feactures.Products.Commands.CreateProduct
 @model ProductCreateViewModel
 
-<form method="post" asp-action="Create">
+<form method="post" asp-action="Create" id="frm-create-product">
 
     <div class="page-header">
         <div>
@@ -37,3 +37,7 @@
         </div>
     </div>
 </form>
+
+@section Scripts{
+    <script src="~/js/products/create.js" asp-append-version="true"></script>
+}

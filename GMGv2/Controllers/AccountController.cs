@@ -8,13 +8,11 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Abstractions;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace GMGv2.Controllers
 {
-    public class AccountController(IUserContext userContext, IMediator mediator) : Controller
+    public class AccountController(IMediator mediator) : Controller
     {
         [HttpGet, AllowAnonymous]
         public IActionResult Login(string returnUrl = null)

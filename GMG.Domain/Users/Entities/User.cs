@@ -30,7 +30,6 @@ namespace GMG.Domain.Users.Entities
 
         private User() { }
         private User(
-            Guid id,
             string username,
             string email,
             string passwordHash,
@@ -39,7 +38,7 @@ namespace GMG.Domain.Users.Entities
             UserRole userRole,
             bool isActive)
         {
-            Id = id;
+            Id = Guid.NewGuid();
             Username = username;
             Email = email;
             PasswordHash = passwordHash;
@@ -72,7 +71,6 @@ namespace GMG.Domain.Users.Entities
                 .Required(!string.IsNullOrEmpty(firstName), "First name cant be empty.")
                 .Required(!string.IsNullOrEmpty(lastName), "Last name cant be empty.")
                 .Build(() => new User(
-                    Guid.NewGuid(),
                     username,
                     email,
                     passwordHash,
@@ -80,6 +78,15 @@ namespace GMG.Domain.Users.Entities
                     lastName,
                     userRole,
                     true));
+        }
+
+        public Result<Branch> AddBranch(string name, string code)
+        {
+            var branch = Branch.CreateDefaultBranchForUser(this.Id, name, code);
+            if (branch.IsSuccess)
+                _branches.Add(branch.Value);
+
+            return branch;
         }
     }
 }

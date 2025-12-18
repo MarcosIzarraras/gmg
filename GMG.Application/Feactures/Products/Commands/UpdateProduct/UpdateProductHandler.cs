@@ -19,7 +19,7 @@ namespace GMG.Application.Feactures.Products.Commands.UpdateProduct
                 return Result<Product>.Failure("Product not found.");
             }
 
-            var productResult = product.Update(request.Name, request.Description, request.Price, request.Stock, request.ProductTypeId);
+            var productResult = product.Update(request.Name, request.Description ?? "", request.Price, request.Stock, request.ProductTypeId);
 
             if (productResult.IsFailure)
                 return productResult;

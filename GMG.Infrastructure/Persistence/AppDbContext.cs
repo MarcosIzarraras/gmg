@@ -19,7 +19,7 @@ namespace GMG.Infrastructure.Persistence
     {
         #region DBSET
         public DbSet<Branch> Branches => Set<Branch>();
-        public DbSet<BranchUser> BranchUsers => Set<BranchUser>();
+        //public DbSet<BranchUser> BranchUsers => Set<BranchUser>();
         public DbSet<Customer> Customers => Set<Customer>();
         public DbSet<Product> Products => Set<Product>();
         public DbSet<ProductType> ProductTypes => Set<ProductType>();
@@ -53,11 +53,32 @@ namespace GMG.Infrastructure.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
                 var clrType = entityType.ClrType;
 
-                // Para OwnBranch
+                // Aplicar indices automaticos
+                if (typeof(OwnUser).IsAssignableFrom(clrType) && !clrType.IsAbstract)
+                {
+                    modelBuilder.Entity(clrType)
+                        .HasIndex(nameof(OwnUser.OwnerId));
+                }
+                if (typeof(OwnBranch).IsAssignableFrom(clrType) && !clrType.IsAbstract)
+                {
+                    modelBuilder.Entity(clrType)
+                        .HasIndex(nameof(OwnBranch.BranchId));
+                }
+                if (typeof(OwnMultipleBranches).IsAssignableFrom(clrType) && !clrType.IsAbstract)
+                {
+                    modelBuilder.Entity(clrType)
+                        .HasIndex(nameof(OwnMultipleBranches.BranchId));
+                }
+
+                // Aplicar filtros globales según las interfaces implementadas
                 if (typeof(OwnBranch).IsAssignableFrom(clrType) && !clrType.IsAbstract)
                 {
                     if (IsOwner)
@@ -77,7 +98,6 @@ namespace GMG.Infrastructure.Persistence
                         method.Invoke(this, new object[] { modelBuilder });
                     }
                 }
-                // Para OwnMultipleBranches
                 else if (typeof(OwnMultipleBranches).IsAssignableFrom(clrType) && !clrType.IsAbstract)
                 {
                     if (IsOwner)
@@ -97,7 +117,6 @@ namespace GMG.Infrastructure.Persistence
                         method.Invoke(this, new object[] { modelBuilder });
                     }
                 }
-                // Para OwnUser
                 else if (typeof(OwnUser).IsAssignableFrom(clrType) && !clrType.IsAbstract)
                 {
                     // Tanto Owner como BranchUser filtran solo por OwnerId
@@ -107,8 +126,6 @@ namespace GMG.Infrastructure.Persistence
                     method.Invoke(this, new object[] { modelBuilder });
                 }
             }
-
-            base.OnModelCreating(modelBuilder);
         }
 
         // Filtros para BranchUser (existentes)
@@ -121,7 +138,7 @@ namespace GMG.Infrastructure.Persistence
         private void SetQueryFilterForOwnMultipleBranches<T>(ModelBuilder modelBuilder) where T : OwnMultipleBranches
         {
             modelBuilder.Entity<T>().HasQueryFilter(e =>
-                e.OwnerId == CurrentOwnerId && (e.BranchId == null || e.BranchId == CurrentBranchId));
+                e.OwnerId == CurrentOwnerId && (e.BranchId == null || e.BranchId == CurrentBranchId || e.BranchId == null));
         }
 
         private void SetQueryFilterForOwnUser<T>(ModelBuilder modelBuilder) where T : OwnUser
@@ -138,11 +155,11 @@ namespace GMG.Infrastructure.Persistence
                 e.OwnerId == CurrentOwnerId);
         }
 
-        private void SetQueryFilterForOwnMultipleBranchesOwner<T>(ModelBuilder modelBuilder, Guid ownerId) where T : OwnMultipleBranches
+        private void SetQueryFilterForOwnMultipleBranchesOwner<T>(ModelBuilder modelBuilder) where T : OwnMultipleBranches
         {
             // Owner ve todo de su organización
             modelBuilder.Entity<T>().HasQueryFilter(e =>
-                e.OwnerId == ownerId);
+                e.OwnerId == CurrentOwnerId);
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

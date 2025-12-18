@@ -12,7 +12,7 @@ using System.Text;
 
 namespace GMG.Application.Feactures.Account.Commands.CreateUser
 {
-    public class CreateUserHandler(IUserRepository userRepository, IRepository<Branch> branchRepository, IUnitOfWork unitOfWork) : IRequestHandler<CreateUserCommand, Result<UserDto>>
+    public class CreateUserHandler(IUnitOfWork unitOfWork) : IRequestHandler<CreateUserCommand, Result<UserDto>>
     {
         public async Task<Result<UserDto>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
@@ -27,14 +27,12 @@ namespace GMG.Application.Feactures.Account.Commands.CreateUser
             if (user.IsFailure)
                 return Result<UserDto>.Failure(user.Error);
 
-            var branch = Branch.CreateDefaultBranchForUser(user.Value.Id, "Default Branch", "0001");
+            var branch = user.Value.AddBranch("Default Branch", "DEF");
 
             if (branch.IsFailure)
                 return Result<UserDto>.Failure(branch.Error);
 
-            await userRepository.AddAsync(user.Value);
-            await branchRepository.AddAsync(branch.Value);
-
+            await unitOfWork.UserRepository.AddAsync(user.Value);
             await unitOfWork.SaveChangesAsync(cancellationToken);
 
             var userDto = new UserDto

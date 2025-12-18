@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login - GMG</title>
+    <title>Login - Gardeny</title>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="~/lib/lucide/lucide.js" asp-append-version="true"></script>
     <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
@@ -35,7 +35,7 @@
                 </div>
             }
 
-            <form asp-action="Login" asp-controller="Account" method="post">
+            <form asp-action="Login" asp-controller="Account" method="post" id="login-form">
                 @* <input type="hidden" asp-for="ReturnUrl" value="@ViewData["ReturnUrl"]" /> *@
 
                 <div class="form-group">
@@ -61,7 +61,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn-primary">Sign in</button>
+                <button id="btn-login" type="submit" class="btn-primary">Sign in</button>
             </form>
 
             <div class="divider">
@@ -74,8 +74,13 @@
         </div>
     </div>
 
+    <script src="~/js/components/requestmanager.js" asp-append-version="true"></script>
     <script>
         lucide.createIcons();
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            requestManager.submitForm(e.target, 'login-user', '#btn-login');
+        });
     </script>
 </body>
 </html>

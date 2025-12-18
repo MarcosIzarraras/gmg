@@ -4,6 +4,6 @@ namespace GMG.Application.Common.Persistence.Repositories
 {
     public interface IBranchRepository : IRepository<Branch>
     {
-        Task<Branch?> GetMainBranch(Guid ownerId);
+        Task<Branch?> GetMainBranch(Guid id);
     }
 }

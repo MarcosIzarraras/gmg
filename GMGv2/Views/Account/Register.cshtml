@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Register - GMG</title>
+    <title>Register - Gardeny</title>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="~/lib/lucide/lucide.js" asp-append-version="true"></script>
     <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
@@ -35,7 +35,7 @@
                 </div>
             }
 
-            <form asp-action="Register" asp-controller="Account" method="post">
+            <form asp-action="Register" asp-controller="Account" method="post" id="register-form">
                 <div class="form-group">
                     <label class="form-label" for="Username">Username</label>
                     <div class="input-wrapper">
@@ -84,7 +84,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn-primary">Create Account</button>
+                <button id="btn-create" type="submit" class="btn-primary">Create Account</button>
             </form>
 
             <div class="divider">
@@ -97,8 +97,13 @@
         </div>
     </div>
 
-    <script>
+    <script src="~/js/components/requestmanager.js" asp-append-version="true"></script>
+    <script> 
         lucide.createIcons();
+        document.getElementById('register-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            requestManager.submitForm(e.target, 'register-user', 'btn-create');
+        });
     </script>
 </body>
 </html>

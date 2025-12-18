@@ -2,6 +2,19 @@
     constructor() {
         this.pendingRequests = new Map();
         this.originalButtonStates = new Map();
+        const style = document.createElement('style');
+        style.textContent = `
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spinner {
+  display: inline-block;
+  animation: spin 1s linear infinite;
+}
+`;
+        document.head.appendChild(style);
     }
 
     async submitForm(form, key, buttonSelector) {

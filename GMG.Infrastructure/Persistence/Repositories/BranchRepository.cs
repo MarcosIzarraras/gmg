@@ -1,5 +1,6 @@
 ﻿using GMG.Application.Common.Persistence.Repositories;
 using GMG.Domain.Branches.Entities;
+using GMG.Infrastructure.Persistence.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace GMG.Infrastructure.Persistence.Repositories
             _db = db;
         }
 
-        public Task<Branch?> GetMainBranch(Guid ownerId)
-            => _db.Branches.FirstOrDefaultAsync(b => b.OwnerId == ownerId && b.IsMainBranch);
+        public Task<Branch?> GetMainBranch(Guid id)
+            => _db.Branches.WithoutTenantFilter().FirstOrDefaultAsync(b => b.IsMainBranch && b.OwnerId == id);
     }
 }
