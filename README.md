@@ -78,4 +78,3 @@ Gardeny es una plataforma SaaS pensada para **gestión de negocios y puntos de v
 ## Contribuciones y soporte
 
 - Gardeny es un proyecto en crecimiento; las contribuciones son bienvenidas desde el código o sugerencias de funcionalidad.  
-- Para soporte, contacto o feedback: **support@gardeny.app** (correo de ejemplo).  
