@@ -1,5 +1,6 @@
 ﻿using GMG.Application.Feactures.Products.Commands.CreateProduct;
 using GMG.Domain.Products.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GMGv2.Models
@@ -12,6 +13,7 @@ namespace GMGv2.Models
         public double InitialStock { get; set; }
         public Guid ProductTypeId { get; set; }
 
+        public List<IFormFile>? Images { get; set; }
         public List<SelectListItem> ProductTypes { get; set; } = new();
     }
 }

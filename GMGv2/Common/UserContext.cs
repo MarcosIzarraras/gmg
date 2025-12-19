@@ -1,4 +1,4 @@
-﻿using GMG.Application.Common;
+﻿using GMG.Application.Common.Interfaces;
 using System.Security.Claims;
 
 namespace GMGv2.Common

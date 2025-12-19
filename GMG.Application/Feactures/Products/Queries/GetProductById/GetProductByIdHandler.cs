@@ -12,7 +12,7 @@ namespace GMG.Application.Feactures.Products.Queries.GetProductById
         public async Task<Product?> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
         {
             Product? product = null;
-            product = await productRepository.GetByIdAsync(request.Id);
+            product = await productRepository.GetProductWithImages(request.Id);
             return product;
         }
     }

@@ -12,6 +12,10 @@ namespace GMG.Domain.Products.Entities
         public Guid ProductTypeId { get; set; }
         public ProductType ProductType { get; set; } = null!;
 
+        private List<ProductImage> _productImages = new();
+        public IReadOnlyCollection<ProductImage> ProductImages 
+            => _productImages.AsReadOnly();
+
         private Product() { }
         private Product(string name, string description, double price, double stock, Guid productTypeId)
         {
@@ -51,6 +55,15 @@ namespace GMG.Domain.Products.Entities
             ProductTypeId = productTypeId;
 
             return Result<Product>.Success(this);
+        }
+
+        public Result<ProductImage> AddImage(string path)
+        {
+            var imageResult = ProductImage.Create(Id, path);
+            if (imageResult.IsSuccess)
+                _productImages.Add(imageResult.Value);
+
+            return Result<ProductImage>.Success(imageResult.Value);
         }
     }
 }

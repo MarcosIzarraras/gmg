@@ -8,5 +8,6 @@ namespace GMG.Application.Common.Persistence.Repositories
     public interface IProductRepository : IRepository<Product>
     {
         public Task<bool> ExistAsync(string name);
+        public Task<Product?> GetProductWithImages(Guid productId);
     }
 }

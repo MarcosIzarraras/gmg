@@ -1,4 +1,4 @@
-﻿using GMG.Application.Common;
+﻿using GMG.Application.Common.Interfaces;
 
 namespace GMG.Infrastructure.Persistence
 {

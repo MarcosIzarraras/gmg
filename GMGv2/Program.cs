@@ -1,8 +1,9 @@
 using GMG.Application;
-using GMG.Application.Common;
+using GMG.Application.Common.Interfaces;
 using GMG.Infrastructure;
 using GMG.Infrastructure.Persistence;
 using GMGv2.Common;
+using GMGv2.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IUserContext, UserContext>();
+builder.Services.AddScoped<IPathProvider, WebPathProvider>();
 
 builder.Services
     .AddApplication()

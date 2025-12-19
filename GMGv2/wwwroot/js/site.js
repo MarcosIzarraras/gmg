@@ -281,11 +281,14 @@ class Table {
 class DragDrop {
     constructor(containerSelector) {
         this.container = document.querySelector(containerSelector);
+        this.files = [];
+        this.imageIdsToDelete = [];
         const imageContainer = this.container.querySelector('.drop-image-container');
 
         if (imageContainer) {
             this.registerImageContainerEvents(imageContainer);
         }
+        this.registerClickEvents();
     }
 
     registerImageContainerEvents(imageContainer) {
@@ -293,12 +296,63 @@ class DragDrop {
             const wrapper = e.target.closest('.drop-image-wrapper');
             if (wrapper) {
                 wrapper.classList.toggle('selected');
-
-                const countSelected = this.container.querySelectorAll('.drop-image-wrapper.selected').length;
-                const buttonSelected = this.container.querySelector('[data-id="btn-selected"]');
-                if (buttonSelected)
-                    buttonSelected.textContent = 'Clear selected (' + countSelected + ')';
+                this.setCountButtonSelected();
             }
+        });
+    }
+    registerClickEvents() {
+        this.container.querySelector('.drop-container').addEventListener('click', (e) => {
+            this.container.querySelector('input').click();
+        });
+        this.container.querySelector('[data-id="btn-selected"]').addEventListener('click', (e) => {
+            this.container.querySelectorAll('.drop-image-wrapper.selected').forEach(e => {
+                e.remove();
+                if (e.dataset.id)
+                    this.imageIdsToDelete.push(e.dataset.id);
+            });
+            this.setCountButtonSelected();
+        });
+        this.container.querySelector('[data-id="btn-clear"]').addEventListener('click', (e) => {
+            this.container.querySelectorAll('.drop-image-wrapper').forEach(e => {
+                e.remove();
+                if (e.dataset.id)
+                    this.imageIdsToDelete.push(e.dataset.id);
+            });
+            this.setCountButtonSelected();
+        });
+        this.container.querySelector('input').addEventListener('change', (e) => {
+            const fileInput = e.target;
+            const files = fileInput.files;
+            const imageFiles = Array.from(files).filter(file => file.type.startsWith('image/'));
+            this.files = [...this.files, ...imageFiles];
+            this.renderPreview();
+        });
+    }
+    setCountButtonSelected() {
+        const countSelected = this.container.querySelectorAll('.drop-image-wrapper.selected').length;
+        const buttonSelected = this.container.querySelector('[data-id="btn-selected"]');
+        if (buttonSelected)
+            buttonSelected.textContent = 'Clear selected (' + countSelected + ')';
+    }
+    renderPreview() {
+        this.files.forEach(file => {
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                // Crear wrapper
+                const wrapper = document.createElement('div');
+                wrapper.className = 'drop-image-wrapper';
+
+                // Crear imagen
+                const img = document.createElement('img');
+                img.className = 'drop-image';
+                img.src = e.target.result;
+
+                wrapper.appendChild(img);
+                this.container.querySelector('.drop-image-container').appendChild(wrapper);
+            };
+
+            reader.readAsDataURL(file);
         });
     }
 }

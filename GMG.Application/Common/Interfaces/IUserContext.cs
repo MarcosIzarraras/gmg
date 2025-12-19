@@ -1,4 +1,4 @@
-﻿namespace GMG.Application.Common
+﻿namespace GMG.Application.Common.Interfaces
 {
     public interface IUserContext
     {

@@ -29,6 +29,11 @@ namespace GMG.Infrastructure.Persistence.Configurations
                 .HasForeignKey(p => p.ProductTypeId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(p => p.ProductImages)
+                .WithOne(p => p.Product)
+                .HasForeignKey(pi => pi.ProductId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -17,5 +17,10 @@ namespace GMG.Infrastructure.Persistence.Repositories
 
         public Task<bool> ExistAsync(string name)
             => _dbSet.AnyAsync(p => p.Name == name);
+
+        public Task<Product?> GetProductWithImages(Guid productId)
+            => _dbSet
+                .Include(i => i.ProductImages)
+                .FirstOrDefaultAsync(p => p.Id == productId);
     }
 }

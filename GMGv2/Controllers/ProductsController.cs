@@ -1,4 +1,6 @@
-﻿using GMG.Application.Common.Paginations;
+﻿using GMG.Application.Common.Dtos;
+using GMG.Application.Common.Interfaces;
+using GMG.Application.Common.Paginations;
 using GMG.Application.Feactures.Products.Commands.CreateProduct;
 using GMG.Application.Feactures.Products.Commands.UpdateProduct;
 using GMG.Application.Feactures.Products.Queries.GetProductById;
@@ -19,7 +21,7 @@ using System.Threading.Tasks;
 namespace GMGv2.Controllers
 {
     [Authorize]
-    public class ProductsController(IMediator mediator) : Controller
+    public class ProductsController(IMediator mediator, IWebHostEnvironment webHostEnvironment, IUserContext userContext) : Controller
     {
         public async Task<ActionResult> Index(Pagination pagination)
             => View(await mediator.Send(new GetProductsPaginatedQuery(pagination)));
@@ -55,7 +57,8 @@ namespace GMGv2.Controllers
                 Price = product.Price,
                 Stock = product.Stock,
                 ProductTypeId = product.ProductTypeId,
-                ProductTypes = productTypes.ToSelectListItems(x => x.Id.ToString(), x => x.Name)
+                ProductTypes = productTypes.ToSelectListItems(x => x.Id.ToString(), x => x.Name),
+                Images = product.ProductImages.Select(i => new ProductImageViewModel() { Id = i.Id.ToString(), Path = i.Path }).ToList()
             };
 
             return View(viewModel);
@@ -64,12 +67,35 @@ namespace GMGv2.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(ProductCreateViewModel productCreateViewModel)
         {
+            List<FileUploadDto> imagesDto = new();
+            var uploads = Path.Combine(webHostEnvironment.WebRootPath, "uploads", "products", userContext.OwnerId.ToString());
+
+            if (!Directory.Exists(uploads))
+            {
+                Directory.CreateDirectory(uploads);
+            }
+            if (productCreateViewModel.Images != null)
+            {
+                foreach (var image in productCreateViewModel.Images)
+                {
+                    imagesDto.Add(new FileUploadDto
+                    (
+                        image.FileName,
+                        image.ContentType,
+                        image.Length,
+                        image.OpenReadStream()
+                    ));
+                }
+            }
+
+
             var result = await mediator.Send(new CreateProductCommand(
                 productCreateViewModel.Name,
                 productCreateViewModel.Description,
                 productCreateViewModel.Price,
                 productCreateViewModel.InitialStock,
-                productCreateViewModel.ProductTypeId));
+                productCreateViewModel.ProductTypeId, 
+                imagesDto));
 
             if (result.IsSuccess)
             {
@@ -86,6 +112,8 @@ namespace GMGv2.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(ProductDetailViewModel productDetailViewModel)
         {
+
+
             var result = await mediator.Send(new UpdateProductCommand(
                 productDetailViewModel.Id,
                 productDetailViewModel.Name,

@@ -1,4 +1,5 @@
-﻿using GMG.Application.Common.Persistence;
+﻿using GMG.Application.Common.Interfaces;
+using GMG.Application.Common.Persistence;
 using MediatR;
 
 namespace GMG.Application.Common.Behaviours

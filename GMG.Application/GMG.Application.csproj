@@ -7,16 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Feactures\Products\Interfaces\**" />
+    <EmbeddedResource Remove="Feactures\Products\Interfaces\**" />
+    <None Remove="Feactures\Products\Interfaces\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BCrypt.Net-Core" Version="1.6.0" />
     <PackageReference Include="MediatR" Version="13.1.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\GMG.Domain\GMG.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Feactures\Products\Interfaces\" />
   </ItemGroup>
 
 </Project>

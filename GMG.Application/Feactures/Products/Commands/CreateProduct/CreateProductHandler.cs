@@ -1,4 +1,5 @@
-﻿using GMG.Application.Common.Persistence;
+﻿using GMG.Application.Common.Interfaces;
+using GMG.Application.Common.Persistence;
 using GMG.Application.Common.Persistence.Repositories;
 using GMG.Domain.Common.Result;
 using GMG.Domain.Products.Entities;
@@ -6,7 +7,7 @@ using MediatR;
 
 namespace GMG.Application.Feactures.Products.Commands.CreateProduct
 {
-    public class CreateProductHandler(IUnitOfWork unitOfWork) : IRequestHandler<CreateProductCommand, Result<Product>>
+    public class CreateProductHandler(IUnitOfWork unitOfWork, IFileStorageService fileStorageService, IUserContext userContext) : IRequestHandler<CreateProductCommand, Result<Product>>
     {
         public async Task<Result<Product>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
@@ -18,6 +19,20 @@ namespace GMG.Application.Feactures.Products.Commands.CreateProduct
 
             if (productResult.IsFailure)
                 return productResult;
+
+            var imagePaths = new List<string>();
+            if (request.Images is not null && request.Images.Any())
+            {
+                imagePaths = await fileStorageService.SaveFilesAsync(
+                    request.Images, 
+                    "uploads/products", 
+                    userContext.OwnerId.ToString());
+            }
+
+            imagePaths.ForEach(imagePath =>
+            {
+                productResult.Value.AddImage(imagePath);
+            });
 
             await unitOfWork.Products.AddAsync(productResult.Value);
             await unitOfWork.SaveChangesAsync(cancellationToken);

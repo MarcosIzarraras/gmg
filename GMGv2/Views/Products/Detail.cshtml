@@ -1,42 +1,76 @@
 ﻿@model GMGv2.Models.ProductDetailViewModel
-<form method="post" asp-controller="products" asp-action="update">
+<form method="post" asp-controller="products" asp-action="update" id="frm-update-product">
     <div class="page-header">
         <div>
             <h1 class="page-title">Edit Product</h1>
         </div>
-        <button class="btn btn-primary">
+        <button class="btn btn-primary" id="btn-update-product">
             Update product
         </button>
     </div>
-    <div class="card">
-        <div class="card-body row">
-            <input asp-for="Id" hidden />
-            <div class="form-group col-6">
-                <label asp-for="Name" class="form-label">Name</label>
-                <input type="text" class="form-input" asp-for="Name" />
-            </div>
-            <div class="form-group col-6">
-                <label asp-for="ProductTypeId" class="form-label">Category</label>
-                <select class="form-input" asp-for="ProductTypeId" asp-items="Model.ProductTypes"></select>
-            </div>
-            <div class="form-group col-12">
-                <label asp-for="Description" class="form-label">Description</label>
-                <input type="text" class="form-input" asp-for="Description" />
-            </div>
-            <div class="form-group col-6">
-                <label asp-for="Price" class="form-label">Price</label>
-                <div class="input-group">
-                    <span class="input-group-text">
-                        <i data-lucide="dollar-sign" style="width:16px;height:16px;"></i>
-                    </span>
-                    <input type="number" class="form-input" asp-for="Price" />
+    <div class="row">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body row">
+                    <div class="col-12" id="drop-files">
+                        <div class="drop-container">
+                            <span class="drop-icon"><i data-lucide="cloud-upload" style="height:50px;width:50px;"></i></span>
+                            <p class="drop-title">Drag here or click to upload your images</p>
+                        </div>
+                        <div class="drop-actions">
+                            <button type="button" data-id="btn-selected" class="btn btn-primary">Clear selected (0)</button>
+                            <button type="button" data-id="btn-clear" class="btn btn-primary">Clear all</button>
+                        </div>
+                        <div class="drop-image-container">
+                            @if (Model.Images != null)
+                            {
+                                foreach (var image in Model.Images)
+                                {
+                                    <div data-id="@image.Id" class="drop-image-wrapper">
+                                        <img class="drop-image" src="@image.Path" />
+                                    </div>
+                                }
+                            }
+                            </div>
+                        <input type="file" hidden accept="image/*" asp-for="NewImages" />
+                    </div>
                 </div>
             </div>
-            <div class="form-group col-6">
-                <label asp-for="Stock" class="form-label">Stock</label>
-                <input type="text" class="form-input" asp-for="Stock" />
+        </div>
+        <div class="col-8">
+            <div class="card">
+                <div class="card-body row">
+                    <input asp-for="Id" hidden />
+                    <div class="form-group col-6">
+                        <label asp-for="Name" class="form-label">Name</label>
+                        <input type="text" class="form-input" asp-for="Name" />
+                    </div>
+                    <div class="form-group col-6">
+                        <label asp-for="ProductTypeId" class="form-label">Category</label>
+                        <select class="form-input" asp-for="ProductTypeId" asp-items="Model.ProductTypes"></select>
+                    </div>
+                    <div class="form-group col-12">
+                        <label asp-for="Description" class="form-label">Description</label>
+                        <input type="text" class="form-input" asp-for="Description" />
+                    </div>
+                    <div class="form-group col-6">
+                        <label asp-for="Price" class="form-label">Price</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i data-lucide="dollar-sign" style="width:16px;height:16px;"></i>
+                            </span>
+                            <input type="number" class="form-input" asp-for="Price" />
+                        </div>
+                    </div>
+                    <div class="form-group col-6">
+                        <label asp-for="Stock" class="form-label">Stock</label>
+                        <input type="text" class="form-input" asp-for="Stock" />
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </form>
-    
+@section Scripts{
+    <script src="~/js/products/detail.js" asp-append-version="true"></script>
+}

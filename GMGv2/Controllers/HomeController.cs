@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using GMG.Application.Common;
+using GMG.Application.Common.Interfaces;
 using GMGv2.Common;
 using GMGv2.Models;
 using Microsoft.AspNetCore.Authorization;
