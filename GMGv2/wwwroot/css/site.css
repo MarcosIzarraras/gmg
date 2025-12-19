@@ -5,6 +5,7 @@
 @import url('inputs.css');
 @import url('dropdowns.css');
 @import url('modales.css');
+@import url('dragdrop.css');
 
 :root {
     --bg-primary: #f8fafc;
@@ -42,7 +43,7 @@ body {
     background: var(--bg-primary);
     color: var(--text-primary);
     line-height: 1.6;
-    min-height: 100vh;
+    min-height: 100dvh;
 }
 
 /* === LAYOUT === */
@@ -53,7 +54,7 @@ body {
     grid-template-areas:
         "sidebar header"
         "sidebar main";
-    min-height: 100vh;
+    min-height: 100dvh;
 }
 
 @media (max-width: 768px) {

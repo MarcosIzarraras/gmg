@@ -2,7 +2,7 @@
 .pos-body {
     margin: 0;
     padding: 0;
-    height: 100ddvh;
+    height: 100dvh;
     overflow: hidden;
     background: var(--bg-primary);
 }

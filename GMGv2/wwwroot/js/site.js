@@ -96,6 +96,7 @@ class Table {
         this.afterRender = afterRender;
         this.actions = actions;
         this.onRowClick = onRowClick;
+        this.totalColumns = (this.actions ? Object.keys(this.actions).length : 0) + this.columns.length;
         this.createTemplate();
         this.registerEvents();
         this.getData();
@@ -106,7 +107,7 @@ class Table {
             <table class="table">
                 ${ this.columnsTemplate() }
                 <tbody>
-                    <tr><td colspan="${ this.columns.length }" style="text-align:center;">Loading...</td></tr>
+                    <tr><td colspan="${ this.totalColumns }" style="text-align:center;">Loading...</td></tr>
                 </tbody>
             </table>
             <div data-id="footer" class="table-footer">
@@ -164,7 +165,7 @@ class Table {
         });
 
         if (items.length === 0) {
-            rows += `<tr><td colspan="${this.columns.length }" style="text-align: center;">Data not found.</td></tr>`;
+            rows += `<tr><td colspan="${this.totalColumns }" style="text-align: center;">Data not found.</td></tr>`;
         }
 
         tableBody.innerHTML = rows;
@@ -272,6 +273,31 @@ class Table {
                 if (this.actions?.[actionName]) {
                     this.actions[actionName](data);
                 }
+            }
+        });
+    }
+}
+
+class DragDrop {
+    constructor(containerSelector) {
+        this.container = document.querySelector(containerSelector);
+        const imageContainer = this.container.querySelector('.drop-image-container');
+
+        if (imageContainer) {
+            this.registerImageContainerEvents(imageContainer);
+        }
+    }
+
+    registerImageContainerEvents(imageContainer) {
+        imageContainer.addEventListener('click', (e) => {
+            const wrapper = e.target.closest('.drop-image-wrapper');
+            if (wrapper) {
+                wrapper.classList.toggle('selected');
+
+                const countSelected = this.container.querySelectorAll('.drop-image-wrapper.selected').length;
+                const buttonSelected = this.container.querySelector('[data-id="btn-selected"]');
+                if (buttonSelected)
+                    buttonSelected.textContent = 'Clear selected (' + countSelected + ')';
             }
         });
     }
